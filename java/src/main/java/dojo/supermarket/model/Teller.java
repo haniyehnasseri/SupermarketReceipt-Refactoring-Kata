@@ -27,7 +27,7 @@ public class Teller {
             //double price = quantity * unitPrice;
             receipt.addProduct(p, quantity);
         }
-        theCart.handleOffers(receipt, this.offers, this.catalog);
+        receipt.handleOffers(this.offers, this.catalog, theCart);
 
         return receipt;
     }
