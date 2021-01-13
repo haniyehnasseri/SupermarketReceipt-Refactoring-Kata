@@ -5,19 +5,19 @@ import java.util.Objects;
 public class ReceiptItem {
     private final Product product;
     //private final double price;
-    private double totalPrice;
+    //private double totalPrice;
     private final double quantity;
 
-    public ReceiptItem(Product p, double quantity, double totalPrice) {
+    public ReceiptItem(Product p, double quantity) {
         this.product = p;
         this.quantity = quantity;
         //this.price = price;
-        this.totalPrice = totalPrice;
+        //this.totalPrice = totalPrice;
     }
 
-    public double getPrice() {
+    /*public double getPrice() {
         return this.product.getPrice();
-    }
+    }*/
 
     public Product getProduct() {
         return product;
@@ -27,8 +27,12 @@ public class ReceiptItem {
         return quantity;
     }
 
-    public double getTotalPrice() {
+    /*public double getTotalPrice() {
         return totalPrice;
+    }*/
+
+    public double getTotalPriceWithoutDiscountCalculated() {
+        return product.getPrice() * quantity;
     }
 
     @Override
@@ -37,7 +41,7 @@ public class ReceiptItem {
         if (o == null || getClass() != o.getClass()) return false;
         ReceiptItem that = (ReceiptItem) o;
         return Double.compare(that.product.getPrice(), product.getPrice()) == 0 &&
-                Double.compare(that.totalPrice, totalPrice) == 0 &&
+                Double.compare(that.getTotalPriceWithoutDiscountCalculated(), getTotalPriceWithoutDiscountCalculated()) == 0 &&
                 Double.compare(that.quantity, quantity) == 0 &&
                 Objects.equals(product, that.product);
     }
@@ -45,7 +49,7 @@ public class ReceiptItem {
     @Override
     public int hashCode() {
 
-        return Objects.hash(product, product.getPrice(), totalPrice, quantity);
+        return Objects.hash(product, product.getPrice(), getTotalPriceWithoutDiscountCalculated(), quantity);
     }
 
 

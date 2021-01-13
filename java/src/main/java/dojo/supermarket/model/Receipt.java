@@ -11,7 +11,7 @@ public class Receipt {
         double total = 0.0;
         // stream
         for (ReceiptItem item : this.items) {
-            total += item.getTotalPrice();
+            total += item.getTotalPriceWithoutDiscountCalculated();
         }
         for (Discount discount : this.discounts) {
             total += discount.getDiscountAmount();
@@ -19,8 +19,8 @@ public class Receipt {
         return total;
     }
 
-    public void addProduct(Product p, double quantity, double totalPrice) {
-        this.items.add(new ReceiptItem(p, quantity,totalPrice));
+    public void addProduct(Product p, double quantity) {
+        this.items.add(new ReceiptItem(p, quantity));
     }
 
     public List<ReceiptItem> getItems() {

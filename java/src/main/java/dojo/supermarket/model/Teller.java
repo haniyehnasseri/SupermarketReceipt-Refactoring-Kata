@@ -14,7 +14,7 @@ public class Teller {
     }
 
     public void addSpecialOffer(SpecialOfferType offerType, Product product, double argument) {
-        this.offers.put(product, new Offer(offerType, product, argument));
+        this.offers.put(product, new Offer(offerType, argument));
     }
 
     public Receipt checksOutArticlesFrom(ShoppingCart theCart) {
@@ -23,9 +23,9 @@ public class Teller {
         for (ProductQuantity pq: productQuantities) {
             Product p = pq.getProduct();
             double quantity = pq.getQuantity();
-            double unitPrice = this.catalog.getUnitPrice(p);
-            double price = quantity * unitPrice;
-            receipt.addProduct(p, quantity, price);
+            //double unitPrice = this.catalog.getUnitPrice(p);
+            //double price = quantity * unitPrice;
+            receipt.addProduct(p, quantity);
         }
         theCart.handleOffers(receipt, this.offers, this.catalog);
 

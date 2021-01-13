@@ -34,13 +34,13 @@ public class ReceiptPrinter {
 
     private String presentReceiptItem(ReceiptItem item) {
 
-        String totalPricePresentation = presentPrice(item.getTotalPrice());
+        String totalPricePresentation = presentPrice(item.getTotalPriceWithoutDiscountCalculated());
         String name = item.getProduct().getName();
 
         String line = formatLineWithWhitespace(name, totalPricePresentation);
 
         if (item.getQuantity() != 1) {
-            line += "  " + presentPrice(item.getPrice()) + " * " + presentQuantity(item) + "\n";
+            line += "  " + presentPrice(item.getProduct().getPrice()) + " * " + presentQuantity(item) + "\n";
         }
         return line;
     }
