@@ -4,20 +4,15 @@ import java.util.Objects;
 
 public class ReceiptItem {
     private final Product product;
-    //private final double price;
-    //private double totalPrice;
+
     private final double quantity;
 
     public ReceiptItem(Product p, double quantity) {
         this.product = p;
         this.quantity = quantity;
-        //this.price = price;
-        //this.totalPrice = totalPrice;
     }
 
-    /*public double getPrice() {
-        return this.product.getPrice();
-    }*/
+
 
     public Product getProduct() {
         return product;
@@ -27,9 +22,7 @@ public class ReceiptItem {
         return quantity;
     }
 
-    /*public double getTotalPrice() {
-        return totalPrice;
-    }*/
+
 
     public double getTotalPriceWithoutDiscountCalculated() {
         return product.getPrice() * quantity;
