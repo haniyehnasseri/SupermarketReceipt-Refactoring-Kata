@@ -9,6 +9,7 @@ public class Receipt {
 
     public Double getTotalPrice() {
         double total = 0.0;
+        // stream
         for (ReceiptItem item : this.items) {
             total += item.getTotalPrice();
         }
@@ -18,8 +19,8 @@ public class Receipt {
         return total;
     }
 
-    public void addProduct(Product p, double quantity, double price, double totalPrice) {
-        this.items.add(new ReceiptItem(p, quantity, price, totalPrice));
+    public void addProduct(Product p, double quantity, double totalPrice) {
+        this.items.add(new ReceiptItem(p, quantity,totalPrice));
     }
 
     public List<ReceiptItem> getItems() {

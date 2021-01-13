@@ -33,6 +33,7 @@ public class ReceiptPrinter {
     }
 
     private String presentReceiptItem(ReceiptItem item) {
+
         String totalPricePresentation = presentPrice(item.getTotalPrice());
         String name = item.getProduct().getName();
 

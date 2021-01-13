@@ -5,10 +5,18 @@ import java.util.Objects;
 public class Product {
     private final String name;
     private final ProductUnit unit;
+    private final double price;
 
-    public Product(String name, ProductUnit unit) {
+
+
+    public Product(String name, ProductUnit unit, double price) {
         this.name = name;
         this.unit = unit;
+        this.price = price;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public String getName() {
