@@ -1,18 +1,17 @@
 package dojo.supermarket.model;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Receipt {
-    private List<ReceiptItem> items = new ArrayList<>();
+    private List<ShoppingItem> items = new ArrayList<>();
     private List<Discount> discounts = new ArrayList<>();
 
     public Double getTotalPrice() {
         double total = 0.0;
         // stream
-        for (ReceiptItem item : this.items) {
+        for (ShoppingItem item : this.items) {
             total += item.getTotalPriceWithoutDiscountCalculated();
         }
         for (Discount discount : this.discounts) {
@@ -22,10 +21,10 @@ public class Receipt {
     }
 
     public void addProduct(Product p, double quantity) {
-        this.items.add(new ReceiptItem(p, quantity));
+        this.items.add(new ShoppingItem(p, quantity));
     }
 
-    public List<ReceiptItem> getItems() {
+    public List<ShoppingItem> getItems() {
         return new ArrayList<>(this.items);
     }
 
@@ -39,9 +38,9 @@ public class Receipt {
 
 
 
-    public Map<Product, Double> getProductQuantities(List<ProductQuantity> items){
+    public Map<Product, Double> getProductQuantities(List<ShoppingItem> items){
         Map<Product, Double> productQuantities = new HashMap<>();
-        for(ProductQuantity item: items){
+        for(ShoppingItem item: items){
             Product product = item.getProduct();
             double quantity = item.getQuantity();
             if (productQuantities.containsKey(product)) {

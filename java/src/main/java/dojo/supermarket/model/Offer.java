@@ -2,64 +2,77 @@ package dojo.supermarket.model;
 
 public class Offer {
     SpecialOfferType offerType;
-    //private final Product product;
     double argument;
 
-    public Offer(SpecialOfferType offerType, double argument) {
+    public Offer(SpecialOfferType offerType,double argument) {
         this.offerType = offerType;
         this.argument = argument;
-        //this.product = product;
     }
 
-    public int getQuantityWithOffers(){
 
-        switch (offerType){
-            case FiveForAmount:
-                return 5;
-            case ThreeForTwo:
-                return 3;
-            case TwoForAmount:
-                return 2;
-            default:
-                return 1;
-        }
-    }
-
-    public Discount getDiscount(Product p, double quantity) {
-        //double unitPrice = catalog.getUnitPrice(p);
-        double unitPrice = p.getPrice();
+    public Discount getTwoForAmountDiscount(Product product,double quantity){
+        double unitPrice = product.getPrice();
         int quantityAsInt = (int) quantity;
-        int quantityWithOffers = getQuantityWithOffers();
-        int proportion = quantityAsInt / quantityWithOffers;
+        int proportion = quantityAsInt / 2;
+        Discount discount = new Discount(product,"no discount", 0.0);
+        if (quantityAsInt >= 2){
+            double pricePerUnit = argument * proportion;
+            double theTotal = (quantityAsInt % 2) * unitPrice;
+            double total = pricePerUnit + theTotal;
+            double discountAmount = unitPrice * quantity - total;
+            discount = new Discount(product, "2 for " + argument, -discountAmount);
 
-        Discount discount = new Discount(p,"no discount", 0.0);
-        double discountAmount = 0.0;
-        if (offerType == SpecialOfferType.TwoForAmount && (quantityAsInt >= 2)){
-
-                double pricePerUnit = argument * proportion;
-                double theTotal = (quantityAsInt % 2) * unitPrice;
-                double total = pricePerUnit + theTotal;
-                discountAmount = unitPrice * quantity - total;
-                discount = new Discount(p, "2 for " + argument, -discountAmount);
-
-        }
-        if (offerType == SpecialOfferType.ThreeForTwo && quantityAsInt > 2) {
-            discountAmount = quantity * unitPrice - ((proportion * 2 * unitPrice) + quantityAsInt % 3 * unitPrice);
-            discount = new Discount(p, "3 for 2", -discountAmount);
-        }
-        if (offerType == SpecialOfferType.TenPercentDiscount) {
-            discountAmount = quantity * unitPrice * argument / 100.0;
-            discount = new Discount(p, argument + "% off", -discountAmount );
-        }
-        if (offerType == SpecialOfferType.FiveForAmount && quantityAsInt >= 5) {
-            discountAmount = unitPrice * quantity - (argument * proportion + quantityAsInt % 5 * unitPrice);
-            discount = new Discount(p, quantityWithOffers + " for " + argument, -discountAmount);
         }
         return discount;
     }
 
-    /*Product getProduct() {
-        return this.product;
-    }*/
+    public Discount getThreeForTwo(Product product,double quantity){
+        double unitPrice = product.getPrice();
+        int quantityAsInt = (int) quantity;
+        int proportion = quantityAsInt / 3;
+        Discount discount = new Discount(product,"no discount", 0.0);
+        if (quantityAsInt > 2) {
+            double discountAmount = quantity * unitPrice - ((proportion * 2 * unitPrice) + quantityAsInt % 3 * unitPrice);
+            discount = new Discount(product, "3 for 2", -discountAmount);
+        }
+        return discount;
+    }
+
+    public Discount getFiveForAmountProduct(Product product,double quantity){
+        double unitPrice = product.getPrice();
+        int quantityAsInt = (int) quantity;
+        int proportion = quantityAsInt / 5;
+        Discount discount = new Discount(product,"no discount", 0.0);
+        if (quantityAsInt >= 5) {
+            double discountAmount = unitPrice * quantity - (argument * proportion + quantityAsInt % 5 * unitPrice);
+            discount = new Discount(product,  "5 for " + argument, -discountAmount);
+        }
+        return discount;
+    }
+
+    public Discount TenPercentDiscount(Product product,double quantity){
+        double unitPrice = product.getPrice();
+        int quantityAsInt = (int) quantity;
+        int proportion = quantityAsInt / 5;
+        Discount discount = new Discount(product,"no discount", 0.0);
+        double discountAmount = quantity * unitPrice * argument / 100.0;
+        discount = new Discount(product, argument + "% off", -discountAmount );
+        return discount;
+    }
+
+    public Discount getDiscount(Product product,double quantity) {
+       switch (offerType) {
+            case FiveForAmount:
+                return getFiveForAmountProduct(product, quantity);
+            case ThreeForTwo:
+                return getThreeForTwo(product, quantity);
+            case TwoForAmount:
+                return getTwoForAmountDiscount(product, quantity);
+            case TenPercentDiscount:
+                return TenPercentDiscount(product, quantity);
+        }
+        return new Discount(product, "no discount", 0.0);
+
+  }
 
 }

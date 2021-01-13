@@ -7,11 +7,9 @@ import java.util.Map;
 
 public class ShoppingCart {
 
-    private final List<ProductQuantity> items = new ArrayList<>();
-    //Map<Product, Double> productQuantities = new HashMap<>();
+    private final List<ShoppingItem> items = new ArrayList<>();
 
-
-    List<ProductQuantity> getItems() {
+    List<ShoppingItem> getItems() {
         return new ArrayList<>(items);
     }
 
@@ -19,13 +17,8 @@ public class ShoppingCart {
         this.addItemQuantity(product, 1.0);
     }
 
-    /*Map<Product, Double> productQuantities() {
-        return productQuantities;
-    }*/
-
-
     public void addItemQuantity(Product product, double quantity) {
-        items.add(new ProductQuantity(product, quantity));
+        items.add(new ShoppingItem(product, quantity));
     }
 
 

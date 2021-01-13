@@ -18,7 +18,7 @@ public class ReceiptPrinter {
 
     public String printReceipt(Receipt receipt) {
         StringBuilder result = new StringBuilder();
-        for (ReceiptItem item : receipt.getItems()) {
+        for (ShoppingItem item : receipt.getItems()) {
             String receiptItem = presentReceiptItem(item);
             result.append(receiptItem);
         }
@@ -32,7 +32,7 @@ public class ReceiptPrinter {
         return result.toString();
     }
 
-    private String presentReceiptItem(ReceiptItem item) {
+    private String presentReceiptItem(ShoppingItem item) {
 
         String totalPricePresentation = presentPrice(item.getTotalPriceWithoutDiscountCalculated());
         String name = item.getProduct().getName();
@@ -74,7 +74,7 @@ public class ReceiptPrinter {
         return String.format(Locale.UK, "%.2f", price);
     }
 
-    private static String presentQuantity(ReceiptItem item) {
+    private static String presentQuantity(ShoppingItem item) {
         return ProductUnit.Each.equals(item.getProduct().getUnit())
                 ? String.format("%x", (int)item.getQuantity())
                 : String.format(Locale.UK, "%.3f", item.getQuantity());
